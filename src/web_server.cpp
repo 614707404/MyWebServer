@@ -11,9 +11,10 @@
 #include <pthread.h>
 
 #include "web_server.h"
+#include "httpparser.h"
 
 #define BUF_SIZE 1024
-#define SMALL_BUF 100
+#define SMALL_BUF 1024
 
 void server_pro(int argc, char *argv[])
 {
@@ -32,6 +33,7 @@ void server_pro(int argc, char *argv[])
     serv_adr.sin_family=AF_INET;
     serv_adr.sin_addr.s_addr=htonl(INADDR_ANY);
     serv_adr.sin_port = htons(atoi(argv[1]));
+
     if(bind(serv_sock, (struct sockaddr*)&serv_adr, sizeof(serv_adr))==-1)
         error_handling("bind() error");
     if(listen(serv_sock, 20)==-1)
@@ -53,40 +55,49 @@ void* request_handler(void *arg)
 {
     int clnt_sock=*((int*)arg);
     char req_line[SMALL_BUF];
-    FILE* clnt_read;
+    int data_read=0;
+    int read_index=0;
+    int checked_index=0;
+    int start_line=0;
+    CHECK_STATE checkState = CHECK_STATE_REQUESTLINE;
+    HTTP_CODE httpCode = NO_REQUEST;
+
     FILE* clnt_write;
 
-    char method[10];
-    char ct[15];
-    char file_name[30];
+    clnt_write=fdopen(clnt_sock, "w");
 
-    clnt_read=fdopen(clnt_sock, "r");
-    clnt_write=fdopen(dup(clnt_sock), "w");
-    fgets(req_line, SMALL_BUF, clnt_read);
-    if(strstr(req_line, "HTTP/")==NULL)
-    {
-        send_error(clnt_write);
-        fclose(clnt_read);
-        fclose(clnt_write);
-        return NULL;
+    while(1){
+        data_read = recv(clnt_sock,req_line+read_index,SMALL_BUF-read_index,0);
+        if(data_read==-1){
+            printf("reading failed\n");
+            break;
+        }else if(data_read==0){
+            printf("remote client has closed the connection\n");
+            break;
+        }
+        read_index+=data_read;
+        httpCode= parse_content(req_line,checked_index,checkState,read_index,start_line);
+        if(httpCode==NO_REQUEST){
+            printf("NO_REQUEST\n");
+            continue;
+        }else if(httpCode==GET_REQUEST){
+            printf("GET_REQUEST\n");
+
+//            send_data(clnt_write, file_name);
+            send_data(clnt_write);
+            return NULL;
+        }else{
+            printf("BAD_REQUEST\n");
+
+            send_error(clnt_write);
+
+            fclose(clnt_write);
+            return NULL;
+        }
     }
-
-    strcpy(method, strtok(req_line, " /"));
-    strcpy(file_name, strtok(NULL, " /"));
-    strcpy(ct, content_type(file_name));
-    if(strcmp(method, "GET")!=0)
-    {
-        send_error(clnt_write);
-        fclose(clnt_read);
-        fclose(clnt_write);
-        return NULL;
-    }
-
-    fclose(clnt_read);
-    send_data(clnt_write, ct, file_name);
 }
-
-void send_data(FILE* fp, char* ct, char* file_name)
+//void send_data(FILE* fp,  char* file_name)
+void send_data(FILE* fp)
 {
     char protocol[]="HTTP/1.0 200 OK\r\n";
     char server[]="Server:Linux Web Server \r\n";
@@ -95,8 +106,8 @@ void send_data(FILE* fp, char* ct, char* file_name)
     char buf[BUF_SIZE];
     FILE* send_file;
 
-    sprintf(cnt_type, "Content-type:%s\r\n\r\n", ct);
-    send_file=fopen(file_name, "r");
+    sprintf(cnt_type, "Content-type:text/html\r\n\r\n");
+    send_file=fopen("index.html", "r");
     if(send_file==NULL)
     {
         send_error(fp);

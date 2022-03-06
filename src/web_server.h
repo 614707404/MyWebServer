@@ -4,6 +4,7 @@
 
 #ifndef MYWEBSERVER_WEB_SERVER_H
 #define MYWEBSERVER_WEB_SERVER_H
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
@@ -11,7 +12,8 @@
 
 void server_pro(int argc, char *argv[]);
 void* request_handler(void* arg);
-void send_data(FILE* fp, char* ct, char* file_name);
+//void send_data(FILE* fp, char* ct, char* file_name);
+void send_data(FILE* fp);
 char* content_type(char* file);
 void send_error(FILE* fp);
 void error_handling(char* message);

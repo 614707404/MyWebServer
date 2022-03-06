@@ -3,4 +3,6 @@ project(MyWebServer)
 
 set(CMAKE_CXX_STANDARD 14)
 #add_executable(main.cpp src/web_server.cpp src/web_server.h)
-add_executable(MyWebServer main.cpp src/httpparser.h src/httpparser.cpp)
+add_executable(MyWebServer main.cpp
+        src/httpparser.h src/httpparser.cpp
+        src/web_server.h src/web_server.cpp )

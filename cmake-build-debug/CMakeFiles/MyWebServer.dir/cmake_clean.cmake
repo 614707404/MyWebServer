@@ -1,6 +1,7 @@
 file(REMOVE_RECURSE
   "CMakeFiles/MyWebServer.dir/main.cpp.o"
   "CMakeFiles/MyWebServer.dir/src/httpparser.cpp.o"
+  "CMakeFiles/MyWebServer.dir/src/web_server.cpp.o"
   "MyWebServer"
   "MyWebServer.pdb"
 )
