@@ -83,6 +83,12 @@
 		<Unit filename="/Users/daiweitao/Desktop/MyWebServer/main.cpp">
 			<Option target="MyWebServer"/>
 		</Unit>
+		<Unit filename="/Users/daiweitao/Desktop/MyWebServer/src/httpparser.cpp">
+			<Option target="MyWebServer"/>
+		</Unit>
+		<Unit filename="/Users/daiweitao/Desktop/MyWebServer/src/httpparser.h">
+			<Option target="MyWebServer"/>
+		</Unit>
 		<Unit filename="/Users/daiweitao/Desktop/MyWebServer/CMakeLists.txt">
 			<Option virtualFolder="CMake Files\"/>
 		</Unit>

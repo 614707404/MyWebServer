@@ -153,6 +153,30 @@ main.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/MyWebServer.dir/build.make CMakeFiles/MyWebServer.dir/main.cpp.s
 .PHONY : main.cpp.s
 
+src/httpparser.o: src/httpparser.cpp.o
+.PHONY : src/httpparser.o
+
+# target to build an object file
+src/httpparser.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/MyWebServer.dir/build.make CMakeFiles/MyWebServer.dir/src/httpparser.cpp.o
+.PHONY : src/httpparser.cpp.o
+
+src/httpparser.i: src/httpparser.cpp.i
+.PHONY : src/httpparser.i
+
+# target to preprocess a source file
+src/httpparser.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/MyWebServer.dir/build.make CMakeFiles/MyWebServer.dir/src/httpparser.cpp.i
+.PHONY : src/httpparser.cpp.i
+
+src/httpparser.s: src/httpparser.cpp.s
+.PHONY : src/httpparser.s
+
+# target to generate assembly for a file
+src/httpparser.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/MyWebServer.dir/build.make CMakeFiles/MyWebServer.dir/src/httpparser.cpp.s
+.PHONY : src/httpparser.cpp.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -165,6 +189,9 @@ help:
 	@echo "... main.o"
 	@echo "... main.i"
 	@echo "... main.s"
+	@echo "... src/httpparser.o"
+	@echo "... src/httpparser.i"
+	@echo "... src/httpparser.s"
 .PHONY : help
 
 

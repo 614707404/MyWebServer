@@ -9,6 +9,7 @@ set(CMAKE_DEPENDS_LANGUAGES
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_CXX
   "/Users/daiweitao/Desktop/MyWebServer/main.cpp" "/Users/daiweitao/Desktop/MyWebServer/cmake-build-debug/CMakeFiles/MyWebServer.dir/main.cpp.o"
+  "/Users/daiweitao/Desktop/MyWebServer/src/httpparser.cpp" "/Users/daiweitao/Desktop/MyWebServer/cmake-build-debug/CMakeFiles/MyWebServer.dir/src/httpparser.cpp.o"
   )
 set(CMAKE_CXX_COMPILER_ID "AppleClang")
 
